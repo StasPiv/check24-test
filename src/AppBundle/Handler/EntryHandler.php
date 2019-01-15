@@ -55,6 +55,15 @@ class EntryHandler
         return $this->manager->getRepository('AppBundle:Entry')->count([]);
     }
 
+    public function checkIp(string $ip): bool
+    {
+        $collection = new ArrayCollection(
+            $this->manager->getRepository('AppBundle:BannedIp')->findBy(['ip' => $ip])
+        );
+
+        return $collection->isEmpty();
+    }
+
     public function addComment(Entry $entry, array $data)
     {
         $comment = new Comment();

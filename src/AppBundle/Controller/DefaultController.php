@@ -76,6 +76,11 @@ class DefaultController extends Controller
      */
     public function commentAction(Request $request, Entry $entry)
     {
+//        dump($request->getClientIp());die;
+        if (!$this->get('handler.entry')->checkIp($request->getClientIp())) {
+            return $this->redirectToRoute('entry', ['entry' => $entry->getId()]);
+        }
+
         $this->get('handler.entry')->addComment($entry, $request->request->all());
 
         return $this->redirectToRoute('entry', ['entry' => $entry->getId()]);
