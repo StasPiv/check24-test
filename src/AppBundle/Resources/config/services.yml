@@ -4,3 +4,7 @@ services:
     arguments: [~, AppBundle\Entity\Entry, ~]
     tags:
     - { name: sonata.admin, manager_type: orm, label: Entry }
+  handler.entry:
+    class: AppBundle\Handler\EntryHandler
+    arguments:
+      - "@doctrine.orm.entity_manager"
