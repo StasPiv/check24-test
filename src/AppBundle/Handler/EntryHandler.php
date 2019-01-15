@@ -27,12 +27,19 @@ class EntryHandler
     protected $manager;
 
     /**
+     * @var \Swift_Mailer
+     */
+    protected $mailer;
+
+    /**
      * EntryHandler constructor.
      * @param EntityManager $manager
+     * @param \Swift_Mailer $mailer
      */
-    public function __construct(EntityManager $manager)
+    public function __construct(EntityManager $manager, \Swift_Mailer $mailer)
     {
         $this->manager = $manager;
+        $this->mailer = $mailer;
     }
 
     public function getEntries($limit = self::LIMIT_PER_PAGE, $offset = 1): Collection
@@ -64,5 +71,35 @@ class EntryHandler
         } catch (ORMException $exception) {
             dump($exception);
         }
+
+        // send email
+        $this->sendEmail($entry, $comment);
+    }
+
+    /**
+     * @param Entry $entry
+     * @param Comment $comment
+     */
+    private function sendEmail(Entry $entry, Comment $comment): void
+    {
+        $message = (new \Swift_Message(sprintf('comment by %s on: %s', $comment->getName(), $entry->getTitle())))
+            ->setFrom('send@check24.test')
+            ->setTo($comment->getEmail())
+            ->setBody(
+                sprintf('comment by %s on: %s', $comment->getName(), $entry->getTitle()),
+                'text/html'
+            )/*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+
+        $this->mailer->send($message);
     }
 }

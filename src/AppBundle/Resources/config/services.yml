@@ -8,3 +8,4 @@ services:
     class: AppBundle\Handler\EntryHandler
     arguments:
       - "@doctrine.orm.entity_manager"
+      - "@mailer"
