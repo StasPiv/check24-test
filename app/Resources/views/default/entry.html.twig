@@ -28,7 +28,13 @@
                     <ul>
                         {% for comment in entry.comments %}
                             <li>
-                                <strong>{{ comment.name }}</strong> ({{ comment.url }}) said ({{ comment.dateString }}):
+                                {% if comment.url != "" %}
+                                    <strong>
+                                        <a href="{{ comment.url }}">{{ comment.name }}</a>
+                                    </strong> ({{ comment.url }}) said ({{comment.dateString }}):
+                                {% else %}
+                                    <strong>{{ comment.name }}</strong> said ({{ comment.dateString }}):
+                                {% endif %}
                                 <p>{{ comment.comment }}</p>
                             </li>
                         {% endfor %}
