@@ -30,6 +30,7 @@ framework:
     assets: ~
     php_errors:
         log: true
+    translator: { fallbacks: ["%locale%"] }
 
 # Twig Configuration
 twig:
@@ -69,3 +70,9 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+sonata_block:
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]

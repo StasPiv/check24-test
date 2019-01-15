@@ -1,0 +1,6 @@
+services:
+  admin.entry:
+    class: AppBundle\Admin\EntryAdmin
+    arguments: [~, AppBundle\Entity\Entry, ~]
+    tags:
+    - { name: sonata.admin, manager_type: orm, label: Entry }

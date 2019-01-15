@@ -10,5 +10,10 @@ services:
     image: nginx
     volumes:
       - "./docker/check24.test.conf:/etc/nginx/conf.d/check24.test.conf"
+      - "./web/bundles:/usr/share/nginx/html/bundles"
     ports:
       - 80:80
+  mysql:
+    image: mysql:5.6
+    environment:
+    - MYSQL_ROOT_PASSWORD=123456
