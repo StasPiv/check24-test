@@ -35,12 +35,17 @@ class EntryHandler
         $this->manager = $manager;
     }
 
-    public function getEntries($limit = self::LIMIT_PER_PAGE): Collection
+    public function getEntries($limit = self::LIMIT_PER_PAGE, $offset = 1): Collection
     {
         return new ArrayCollection(
             $this->manager->getRepository('AppBundle:Entry')
-                ->findBy([], ['id' => Criteria::DESC], $limit)
+                ->findBy([], ['id' => Criteria::DESC], $limit, $offset)
         );
+    }
+
+    public function getEntriesCount(): int
+    {
+        return $this->manager->getRepository('AppBundle:Entry')->count([]);
     }
 
     public function addComment(Entry $entry, array $data)

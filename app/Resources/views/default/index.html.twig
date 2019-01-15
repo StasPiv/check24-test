@@ -22,7 +22,13 @@
                 {% endfor %}
             </ul>
 
-            <a href="{{ url('entries') }}">To old entries</a>
+            {% if offset > 0 %}
+                <a href="{{ url('homepage', {'offset': offset - 1}) }}">To new entries</a>
+            {% endif %}
+
+            {% if show_link_to_old %}
+                <a href="{{ url('homepage', {'offset': offset + 1}) }}">To old entries</a>
+            {% endif %}
 
         </div>
     </div>
