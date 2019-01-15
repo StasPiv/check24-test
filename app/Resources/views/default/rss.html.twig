@@ -1,0 +1,17 @@
+{% autoescape %}
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>Check24 Test Task</title>
+        <link>{{ url('homepage') }}</link>
+        <description>Check24</description>
+        {% for entry in entries %}
+            <item>
+                <title>{{ entry.title|e}}</title>
+                <link>{{ url('entry', { 'entry': entry.id }) }}</link>
+                <description>{{ entry.shortDescription }}</description>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
+{% endautoescape %}
